@@ -12,4 +12,5 @@ Projeto da rocketseat, desenvolvido no chapter II da trilha de react native do I
 - Navegação, Formulários e Login Social
 - Bare Workflow
 
-
+## Projeto no Figma
+<a src="https://www.figma.com/file/Tb8tH8JMQgh2h8VZ2As9wN/GoFinances-Ignite-(Copy)">Layout do projeto</a>
