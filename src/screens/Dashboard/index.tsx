@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { HighLightCard } from '../../components/HighLightCard';
+import { TransactionCard } from '../../components/TransactionCard';
 
 import { 
     Container,
@@ -11,7 +13,9 @@ import {
     UserGreatting,
     UserName,
     Icon,
-    HighLightCards
+    HighLightCards,
+    Transactions,
+    TransactionTitle
 } from './style';
 
 export function Dashboard() {
@@ -50,6 +54,14 @@ export function Dashboard() {
                         lastTransition="01 à 16 de abril"
                 />
             </HighLightCards>
+
+            <Transactions>
+                <TransactionTitle>Listagem</TransactionTitle>
+                <TransactionCard />
+                <TransactionCard />
+                <TransactionCard />
+
+            </Transactions>
         </Container>
     );
 }
