@@ -14,11 +14,13 @@ export const Container = styled.TouchableOpacity.attrs({
 
     padding: 18px 16px;
 `;
+
 export const Category = styled.Text`
     font-family: ${({ theme }) => theme.fonts.regular};
     font-size: ${RFValue(14)}px;
     color: ${({ theme }) => theme.colors.text};
 `;
+
 export const Icon = styled(Feather)`
     font-size: ${RFValue(20)}px;
     color: ${({ theme }) => theme.colors.text};
