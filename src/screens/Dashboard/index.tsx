@@ -12,6 +12,7 @@ import {
     UserInfo,
     UserGreatting,
     UserName,
+    Button,
     Icon,
     HighLightCards,
     Transactions,
@@ -68,7 +69,10 @@ export function Dashboard() {
                             <UserName>Gabriel</UserName>
                         </User>
                     </UserInfo>
-                    <Icon name="power" />
+                    <Button>
+                        <Icon name="power" />
+                    </Button>
+                    
                 </UserWrapper>
             </Header>
             

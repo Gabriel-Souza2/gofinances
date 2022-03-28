@@ -3,6 +3,7 @@ import { FlatList, FlatListProps } from 'react-native';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { Feather } from '@expo/vector-icons';
 import { getStatusBarHeight, getBottomSpace } from 'react-native-iphone-x-helper'
+import { BorderlessButton } from 'react-native-gesture-handler';
 
 import { TransactionsListProps } from '.';
 
@@ -52,6 +53,8 @@ export const UserName = styled.Text`
     font-family: ${({ theme }) => theme.fonts.bold};
     color: ${({ theme }) => theme.colors.shape};
 `;
+
+export const Button = styled(BorderlessButton)``;
 
 export const Icon = styled(Feather)`
     font-size: ${RFValue(24)}px;
