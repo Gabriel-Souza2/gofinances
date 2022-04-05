@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import { Alert, Keyboard, Modal, TouchableWithoutFeedback } from 'react-native'; 
 import  { useForm } from 'react-hook-form';
+import { useNavigation } from '@react-navigation/native';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+import uuid from 'react-native-uuid';
 
 import { InputForm } from '../../components/Form/InputForm';
 import { Button } from '../../components/Form/Button';
 import { TransactionTypeButton } from '../../components/Form/TransactionTypeButton';
 import { CategorySelectButton } from '../../components/Form/CategorySelectButton';
 import { CategorySelect, Category } from '../CategorySelect';
+
+import { StoreTransancions } from '../../services/store-transactions';
 
 import { 
     Container,
@@ -36,15 +40,17 @@ const schema = yup.object({
 })
 
 export function Register(){
-    const [transactionType, setTransactionType] = useState('');
+    const [transactionType, setTransactionType] = useState<'up' | 'down' | ''>('');
     const [categoryModalOpen, setCategoryModalOpen] = useState(false);
     const [category, setCategory] = useState({
         key: 'category',
         name: 'Categorias'
     });
-    const { control, handleSubmit, formState: { errors } } = useForm({
+    const { control, handleSubmit, formState: { errors }, reset } = useForm({
         resolver: yupResolver(schema)
     });
+
+    const navigation = useNavigation();
 
     function handleTransactionsTypeSelect(type: 'up' | 'down') {
         setTransactionType(type);
@@ -62,7 +68,7 @@ export function Register(){
         setCategoryModalOpen(false);
     }
 
-    function handleRegister(form: FormData) {
+    async function handleRegister(form: FormData) {
         if (transactionType == '') { 
             return Alert.alert("Selecione o tipo de transição!") 
         }
@@ -71,13 +77,32 @@ export function Register(){
             return Alert.alert("Selecione a categoria!") 
         }
         const data ={
+            id: String(uuid.v4()),
+            type: transactionType,
             name: form.name,
             amount: form.amount,
-            category: category.key,
-            transactionType
+            categoryKey: category.key,
+            date: new Date().toString()
         }
 
-        console.log(data)
+        try {
+            await StoreTransancions.set(data);
+            setTransactionType('');
+            setCategory({
+                key: 'category',
+                name: 'Categorias'
+            });
+            reset();
+
+          navigation.navigate("Listagem");
+        }
+        catch(error) {
+            console.log(error);
+            Alert.alert("Não foi possivel salvar");
+        }
+
+
+
     }
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

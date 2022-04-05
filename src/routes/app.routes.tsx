@@ -9,6 +9,12 @@ import { Register } from '../screens/Register';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
+export type GoFinancesRoutesList = {
+    Listagem: undefined,
+    Cadastrar: undefined,
+    Resumo: undefined
+}
+
 export function AppRoutes() {
     const theme = useTheme();
 
