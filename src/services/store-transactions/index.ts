@@ -13,7 +13,7 @@ const DATA_KEY = '@gofinances::transactions';
 export const StoreTransancions: PersistentTransancions = {
     async set( data: TransactionsListProps ) {
         const transactions = await AsyncStorage.getItem(DATA_KEY);
-        //gerar id
+
         const currentTransaction = transactions ? JSON.parse(transactions) : [];
 
         await AsyncStorage.setItem(DATA_KEY, JSON.stringify([
