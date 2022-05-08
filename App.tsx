@@ -17,6 +17,7 @@ import theme from './src/global/styles/theme';
 
 import { AppRoutes } from './src/routes/app.routes';
 
+import { SignIn } from './src/screens/SignIn';
 
 
 export default function App() {
@@ -33,7 +34,7 @@ export default function App() {
     <GestureHandlerRootView style={{flex: 1}}>
       <ThemeProvider theme={theme}>
         <NavigationContainer>
-          <AppRoutes />
+          <SignIn />
         </NavigationContainer>
         <StatusBar style="auto" />
       </ThemeProvider>
