@@ -9,7 +9,7 @@ import { useTheme } from 'styled-components';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 
 import { HistoryCard } from '../../components/HistoryCard';
-import { StoreTransancions } from '../../services/store-transactions';
+import { StoreTransancions } from '../../services/store';
 import { categories } from '../../util/categories';
 
 import { TransactionsListProps } from '../Dashboard';

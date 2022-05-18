@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { ActivityIndicator } from 'react-native';
 import { useTheme } from 'styled-components';
+import { useAuth } from '../../hooks/auth';
+
 
 import { HighLightCard } from '../../components/HighLightCard';
 import { TransactionCard, TransactionCardProps } from '../../components/TransactionCard';
@@ -25,7 +27,7 @@ import {
     
 } from './style';
 
-import { StoreTransancions } from '../../services/store-transactions';
+import { StoreTransancions } from '../../services/store';
 
 export interface TransactionsListProps extends TransactionCardProps {
     id: string;
@@ -44,6 +46,7 @@ interface HighLightData {
 export function Dashboard() {
 
     const theme = useTheme();
+    const { SignOut, user } = useAuth();
     const [isLoading, setIsLoading] = useState(true);
     const [transactions, setTransactions] = useState<TransactionsListProps[]>([]);
     const [highLightData, setHighLightData] = useState<HighLightData>({} as HighLightData);
@@ -147,13 +150,13 @@ export function Dashboard() {
                     <Header>
                         <UserWrapper>
                             <UserInfo>
-                                <Photo source={{uri: "https://avatars.githubusercontent.com/u/19994168?s=400&u=ded5415ddc637e39f0d99d11163ee01c14ac757d&v=4"}}/>
+                                <Photo source={{uri: user.photo }}/>
                                 <User>
                                     <UserGreatting>Olá,</UserGreatting>
-                                    <UserName>Gabriel</UserName>
+                                    <UserName>{ user.name }</UserName>
                                 </User>
                             </UserInfo>
-                            <Button>
+                            <Button onPress={() => SignOut()}>
                                 <Icon name="power" />
                             </Button>
                             

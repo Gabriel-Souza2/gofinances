@@ -12,7 +12,7 @@ import { TransactionTypeButton } from '../../components/Form/TransactionTypeButt
 import { CategorySelectButton } from '../../components/Form/CategorySelectButton';
 import { CategorySelect, Category } from '../CategorySelect';
 
-import { StoreTransancions } from '../../services/store-transactions';
+import { StoreTransancions } from '../../services/store';
 
 import { 
     Container,
