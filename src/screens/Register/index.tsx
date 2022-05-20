@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Alert, Keyboard, Modal, TouchableWithoutFeedback } from 'react-native'; 
 import  { useForm } from 'react-hook-form';
+import { useAuth } from '../../hooks/auth';
 import { useNavigation } from '@react-navigation/native';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
@@ -40,6 +41,8 @@ const schema = yup.object({
 })
 
 export function Register(){
+    const { user } = useAuth();
+
     const [transactionType, setTransactionType] = useState<'up' | 'down' | ''>('');
     const [categoryModalOpen, setCategoryModalOpen] = useState(false);
     const [category, setCategory] = useState({
@@ -86,7 +89,7 @@ export function Register(){
         }
 
         try {
-            await StoreTransancions.set(data);
+            await StoreTransancions.set(data, user);
             setTransactionType('');
             setCategory({
                 key: 'category',

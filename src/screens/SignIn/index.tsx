@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { RFValue } from "react-native-responsive-fontsize";
 import { useAuth } from '../../hooks/auth';
-import { Alert } from 'react-native';
+import { ActivityIndicator, Alert } from 'react-native';
 
 import Logo from '../../assets/logo.svg';
 import Google from '../../assets/google.svg';
@@ -18,13 +18,18 @@ import {
     FooterWraper
 } from './styles';
 import { SignInSocialButton } from '../../components/SignInSocialButton';
+import { useTheme } from 'styled-components';
 
 
 export function SignIn () {
     const { signInWithGoogle } = useAuth();
+    const theme = useTheme();
+
+    const [isLoadingSignIn, setIsLoadingSignIn] = useState(false);
 
     async function handleSignInWithGoogle() {
         try {
+            setIsLoadingSignIn(true);
             await signInWithGoogle();
         } catch (error) {
             console.log(error);
@@ -46,7 +51,11 @@ export function SignIn () {
                     <SignInSocialButton title="Entrar com Apple" svg={Apple}/>
 
                 </FooterWraper>
-
+                {
+                    isLoadingSignIn ? 
+                        <ActivityIndicator color={theme.colors.shape}/>
+                    : <></>
+                }
             </Footer>
         </Container>
     )

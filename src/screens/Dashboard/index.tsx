@@ -52,8 +52,18 @@ export function Dashboard() {
     const [highLightData, setHighLightData] = useState<HighLightData>({} as HighLightData);
 
     function getLastTransaction(collection: TransactionsListProps[], type: 'up' | 'down' ) {
-        const lastTransaciton = new Date (Math.max.apply(Math, collection
-            .filter((transaction: TransactionsListProps) => transaction.type === type)
+        const transactions = collection.filter(
+            (transaction: TransactionsListProps) => transaction.type === type
+        );
+
+        if(transactions.length === 0) {
+            return 0;
+        } 
+        
+        console.log(transactions);
+        console.log(type);
+
+        const lastTransaciton = new Date (Math.max.apply(Math, transactions
             .map((transaction: TransactionsListProps) => new Date(transaction.date).getTime())));
 
         return `${lastTransaciton.getDate()} de ${lastTransaciton.toLocaleString('pt-BR', {'month': 'long'})}`;
@@ -63,7 +73,7 @@ export function Dashboard() {
     async function loadTransactions() {
         let entriesTotal = 0;
         let expansivesTotal = 0;
-        const transactions = await StoreTransancions.get();
+        const transactions = await StoreTransancions.get(user);
 
         const transactionsFormatted: TransactionsListProps[] = transactions.map(
             (item: TransactionsListProps) => {
@@ -105,14 +115,16 @@ export function Dashboard() {
                     style: 'currency',
                     currency: 'BRL'
                 }),
-                lastTransaction: `Última entrada dia ${lastTransactionsEntries}`
+                lastTransaction: 
+                    lastTransactionsEntries ? `Última entrada dia ${lastTransactionsEntries}` : 'Não há entradas'
             },
             expansives: {
                 amount: expansivesTotal.toLocaleString('pt-BR',{
                     style: 'currency',
                     currency: 'BRL'
                 }),
-                lastTransaction: `Última saida dia ${lastTransactionsExpansives}`
+                lastTransaction: 
+                lastTransactionsExpansives ? `Última saida dia ${lastTransactionsExpansives}` : 'Não a saidas'
             },
             total: {
                 amount: total.toLocaleString('pt-BR',{

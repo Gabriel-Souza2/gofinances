@@ -11,8 +11,8 @@ interface User {
 
 
 interface PersistentTransancions {
-    set: ( data: TransactionsListProps ) => void;
-    get: () => Promise<TransactionsListProps[]>;
+    set: ( data: TransactionsListProps, user:  User ) => void;
+    get: ( user:  User ) => Promise<TransactionsListProps[]>;
 }
 
 interface UserStore {
@@ -21,23 +21,29 @@ interface UserStore {
     logout: () => Promise<void>;
 }
 
-const DATA_KEY = '@gofinances::transactions';
 
 export const StoreTransancions: PersistentTransancions = {
-    async set( data: TransactionsListProps ) {
-        const transactions = await AsyncStorage.getItem(DATA_KEY);
+    async set( data: TransactionsListProps, user:  User) {
+       
+        const KEY = `@gofinances::transactions::${user.id}`
+       
+        const transactions = await AsyncStorage.getItem(KEY);
 
         const currentTransaction = transactions ? JSON.parse(transactions) : [];
 
-        await AsyncStorage.setItem(DATA_KEY, JSON.stringify([
+        await AsyncStorage.setItem(KEY, JSON.stringify([
             ...currentTransaction, data
         ]));
 
     },
   
-    async get(): Promise<TransactionsListProps[]> {
-        const transactions = await AsyncStorage.getItem(DATA_KEY);
+    async get( user:  User ): Promise<TransactionsListProps[]> {
+        const KEY = `@gofinances::transactions::${user.id}`
+
+        const transactions = await AsyncStorage.getItem(KEY);
+
         const response = transactions ? JSON.parse(transactions) : [];
+
         return response;
     }
 }
